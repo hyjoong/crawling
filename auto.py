@@ -25,7 +25,10 @@ def type_input():
 def delete_list():
     listbox.delete(listbox.curselection()) # 선택한 항목 삭제
 
-
+# 반복 체크박스 (ture인 상태에서 시작을 누르면 listbox에 있는 동작들이 반복된다)
+chkvar = BooleanVar()
+checkBox = Checkbutton(win, text="반복", variable=chkvar)
+checkBox.pack();
 
 labelTitle = Label(win,text="매크로")
 labelTitle.pack()
