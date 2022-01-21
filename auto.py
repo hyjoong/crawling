@@ -51,7 +51,16 @@ menu.add_cascade(label="시작", menu=menu_start)
 menu.add_cascade(label="설정", menu=menu_setting)
 
 win.config(menu=menu)
-win.mainloop()
+
+# 메뉴 프레임
+frame_menu = Frame(win,relief="solid", bd=1)
+frame_menu.pack(side="right", fill="both")
+
+Button(frame_menu, text="키보드").pack()
+Button(frame_menu, text="마우스").pack()
+Button(frame_menu, text="시간").pack()
+Button(frame_menu, text="지우기").pack()
+
 
 
 
