@@ -7,7 +7,7 @@ from function import get_mouse_position
 win = Tk()
 win.geometry("600x600")
 win.title("Macro")
-win.option_add("*Font","맑은고딕 25")
+win.option_add("*Font","맑은고딕 20")
 
 
 
@@ -34,9 +34,15 @@ def createKeyWindow():
     global new
     new = Toplevel()
 
+    listSel = listbox.curselection()[0]
+    nowSel = burger_var.get()
     def key_value():
         temp = ent2.get()
-        listbox.insert(END,temp)
+        if nowSel == 0: # 추가 체크박스 선택 시 리스트 박스 끝에 추가
+            listbox.insert(END,temp)
+        elif nowSel ==1: # 삽입 체크박스 선택 시 리스트 박스 선택한 요소 뒤에 추가
+            listbox.insert(listSel+1,temp)
+
 
     lb = Label(new, text="추가할 키를 입력하세요")
     ent2 = Entry(new,width=7)
@@ -45,7 +51,6 @@ def createKeyWindow():
     success_btn.config(command=key_value)
     ent2.pack()
     success_btn.pack()
-
 def createMouseWindow():
     global new
     new = Toplevel()
@@ -56,10 +61,6 @@ def createMouseWindow():
 def find_location():
     place = pyautogui.position()
     print(place)
-
-def type_input():
-    inputs = ent.get()
-    print(inputs)
 
 def delete_list():
     listbox.delete(listbox.curselection()) # 선택한 항목 삭제
@@ -109,8 +110,8 @@ Button(frame_menu, text="지우기",command=delete_list).pack()
 
 
 # 반복 체크박스 (ture인 상태에서 시작을 누르면 listbox에 있는 동작들이 반복된다)
-chkvar = BooleanVar()
-checkBox = Checkbutton(win, text="반복", variable=chkvar)
+repeatVar = BooleanVar()
+checkBox = Checkbutton(win, text="반복", variable=repeatVar)
 checkBox.pack();
 
 # 라디오 버튼
@@ -122,22 +123,25 @@ btn_burger1.pack()
 btn_burger2.pack()
 
 
-listbox = Listbox(win, selectmode ="extended",height=0)
+listbox = Listbox(win, selectmode ="extended",height=5 )
+
 listbox.insert(0,"시작")
-listbox.insert(END,"동작1")
-listbox.insert(END,"동작2")
-listbox.pack()
+listbox.activate(0)
+listbox.pack(side="left")
 
-ent = Entry(win)
-ent.pack()
+def click():
+#    text = repeatVar.get()  # 반복 버튼 눌렸는지 여부 확인
 
-def add_list():
-    temp = ent.get()
-    print(ent.get())
-    listbox.insert(END,temp)
+
+
+
+    selBtn = Button(frame_menu, text="옵션 선택")
+    selBtn.config(command = click)
+    selBtn.pack()
+
 
 def delete_list():
-    select = listbox.curselection()
+    select = listbox.curselection()[0]
     print(select)
 
 win.mainloop()
